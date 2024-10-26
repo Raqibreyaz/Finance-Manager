@@ -83,6 +83,7 @@ const app = new Hono()
     async (c) => {
       const auth = getAuth(c);
       const values = c.req.valid("json");
+
       if (!auth?.userId) return c.json({ error: "Unauthorized" }, 401);
 
       const data = await db
@@ -94,8 +95,10 @@ const app = new Hono()
           )
         )
         .returning({ id: categories.id });
-
-      return c.json({ data });
+        
+      return !data
+        ? c.json({ error: "Selected Items Not Available" })
+        : c.json({ data });
     }
   )
   .patch(

@@ -22,6 +22,13 @@
       "when": 1729800169770,
       "tag": "0002_windy_lily_hollister",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1729869944565,
+      "tag": "0003_huge_snowbird",
+      "breakpoints": true
     }
   ]
 }
