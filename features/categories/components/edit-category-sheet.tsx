@@ -44,8 +44,6 @@ export const EditCategorySheet = () => {
     ? { name: categoryQuery.data.name }
     : { name: "" };
 
-  console.log("rendering edit sheet");
-
   return (
     <>
       <ConfirmDialog />

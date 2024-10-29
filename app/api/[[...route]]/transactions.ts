@@ -12,7 +12,7 @@ import { createId } from "@paralleldrive/cuid2";
 import { z } from "zod";
 import { parse, subDays } from "date-fns";
 import { and, desc, eq, gte, inArray, lte, sql } from "drizzle-orm";
-import { error } from "console";
+
 
 const app = new Hono()
   // getting transactions

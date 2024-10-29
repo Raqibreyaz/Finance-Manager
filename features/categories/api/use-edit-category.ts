@@ -27,8 +27,6 @@ export const useEditCategory = (id?: string) => {
       // TODO: invalidate summary and transactions
     },
     onError: (error) => {
-      console.log(error);
-
       toast.error("Failed to Edit Category");
     },
   });

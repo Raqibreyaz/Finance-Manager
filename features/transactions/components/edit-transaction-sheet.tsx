@@ -15,9 +15,8 @@ import { useConfirm } from "@/components/use-confirm";
 import { useGetAccount } from "@/features/accounts/api/use-get-account";
 import { useEditAccount } from "@/features/accounts/api/use-edit-account";
 import { useDeleteAccount } from "@/features/accounts/api/use-delete-account";
-import { aggregationFns } from "@tanstack/react-table";
 
-export const EditAccountSheet = () => {
+export const EditTransactionSheet = () => {
   const { isOpen, onClose, id } = useOpenAccount();
 
   const accountQuery = useGetAccount(id);
@@ -44,8 +43,6 @@ export const EditAccountSheet = () => {
   const defaultValues = accountQuery.data
     ? { name: accountQuery.data.name }
     : { name: "" };
-
-  console.log("rendering edit sheet");
 
   return (
     <>

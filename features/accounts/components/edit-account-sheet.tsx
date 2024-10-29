@@ -45,8 +45,6 @@ export const EditAccountSheet = () => {
     ? { name: accountQuery.data.name }
     : { name: "" };
 
-  console.log("rendering edit sheet");
-
   return (
     <>
       <ConfirmDialog />
