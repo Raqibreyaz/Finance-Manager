@@ -6,11 +6,14 @@ export const useGetTransaction = (id?: string) => {
     enabled: !!id,
     queryKey: ["transaction", { id }],
     queryFn: async () => {
-      const response = await client.api.transactions[":id"].$get({ param: { id } });
+      const response = await client.api.transactions[":id"].$get({
+        param: { id },
+      });
 
       if (!response.ok) throw new Error("failed to fetch transaction");
 
       const { data } = await response.json();
+      console.log(data);
 
       return data;
     },

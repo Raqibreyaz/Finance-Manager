@@ -12,7 +12,7 @@ import { createId } from "@paralleldrive/cuid2";
 import { z } from "zod";
 import { parse, subDays } from "date-fns";
 import { and, desc, eq, gte, inArray, lte, sql } from "drizzle-orm";
-
+import { convertAmountFromMilliunits } from "@/lib/utils";
 
 const app = new Hono()
   // getting transactions
@@ -78,7 +78,12 @@ const app = new Hono()
         // sort the data with newest first
         .orderBy(desc(transactions.date));
 
-      return c.json({ data });
+      return c.json({
+        data: data.map((transaction) => ({
+          ...transaction,
+          amount: convertAmountFromMilliunits(transaction.amount),
+        })),
+      });
     }
   )
   // getting a transaction
@@ -116,7 +121,9 @@ const app = new Hono()
 
       if (!data) return c.json({ error: "Not Found" }, 404);
 
-      return c.json({ data });
+      return c.json({
+        data: { ...data, amount: convertAmountFromMilliunits(data.amount) },
+      });
     }
   )
   // adding a transaction
@@ -138,7 +145,7 @@ const app = new Hono()
 
       const [data] = await db
         .insert(transactions)
-        .values({ id: createId(), ...values })
+        .values({ id: createId(), ...values }) 
         .returning();
 
       return c.json({ data });
@@ -264,10 +271,10 @@ const app = new Hono()
       if (!auth?.userId) {
         return c.json({ error: "Unauthorized" }, 400);
       }
-
+      
       const transactionToDelete = db.$with("transaction_to_delete").as(
         db
-          .select()
+          .select({ id: transactions.id })
           .from(transactions)
           .innerJoin(accounts, eq(transactions.accountId, accounts.id))
           .where(and(eq(accounts.userId, auth.userId), eq(transactions.id, id)))
@@ -277,7 +284,7 @@ const app = new Hono()
         .with(transactionToDelete)
         .delete(transactions)
         .where(
-          inArray(transactions.id, sql`select id from ${transactionToDelete}`)
+          inArray(transactions.id, sql`(select id from ${transactionToDelete})`)
         )
         .returning();
 

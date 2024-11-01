@@ -88,7 +88,7 @@ export const TransactionForm: React.FC<Props> = ({
                 <DatePicker
                   onChange={field.onChange}
                   value={field.value}
-                  disabled={false}
+                  disabled={disabled}
                 />
               </FormControl>
             </FormItem>

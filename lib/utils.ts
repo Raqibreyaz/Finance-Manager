@@ -10,5 +10,14 @@ export const convertAmountToMilliunits = (amount: number) => {
 };
 
 export const convertAmountFromMilliunits = (amount: number) => {
-  return amount / 1000;
+  const convertedAmount = amount / 1000;
+  return convertedAmount;
+};
+
+export const formatCurrency = (value: number) => {
+  return Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "INR",
+    minimumFractionDigits: 2,
+  }).format(value);
 };

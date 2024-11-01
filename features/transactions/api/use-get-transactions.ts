@@ -10,7 +10,7 @@ export const useGetTransactions = () => {
   const accountId = params.get("accountId") || "";
 
   const query = useQuery({
-    queryKey: ["transactions", { from, to, accountId }],
+    queryKey: ["transactions"],
     // TODO: check if params are needed in the key
     queryFn: async () => {
       const response = await client.api.transactions.$get({
@@ -24,6 +24,7 @@ export const useGetTransactions = () => {
       if (!response.ok) throw new Error("failed to fetch transactions");
 
       const { data } = await response.json();
+      console.log(data);
 
       return data;
     },

@@ -8,7 +8,7 @@ type T = (typeof client.api.transactions)[":id"]["$patch"];
 type ResponseType = InferResponseType<T>;
 type RequestType = InferRequestType<T>["json"];
 
-export const useEdittransaction = (id?: string) => {
+export const useEditTransaction = (id?: string) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
@@ -22,7 +22,7 @@ export const useEdittransaction = (id?: string) => {
     },
     onSuccess: () => {
       toast.success("Transaction Updated");
-      queryClient.invalidateQueries({ queryKey: ["transaction"] });
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["transaction", { id }] });
       // TODO: invalidate summary and transactions
     },

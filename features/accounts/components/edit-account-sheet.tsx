@@ -15,7 +15,6 @@ import { useConfirm } from "@/components/use-confirm";
 import { useGetAccount } from "@/features/accounts/api/use-get-account";
 import { useEditAccount } from "@/features/accounts/api/use-edit-account";
 import { useDeleteAccount } from "@/features/accounts/api/use-delete-account";
-import { aggregationFns } from "@tanstack/react-table";
 
 export const EditAccountSheet = () => {
   const { isOpen, onClose, id } = useOpenAccount();

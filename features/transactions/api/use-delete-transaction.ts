@@ -25,7 +25,7 @@ export const useDeleteTransaction = (id?: string) => {
       // TODO: invalidate summary and transactions
     },
     onError: (error) => {
-      toast.error("Failed to Delete Transaction");
+      toast.error(error.message);
     },
   });
 

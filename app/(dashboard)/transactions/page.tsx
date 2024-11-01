@@ -7,6 +7,9 @@ import { useNewTransaction } from "@/features/transactions/hooks/use-new-transac
 import { useGetTransactions } from "@/features/transactions/api/use-get-transactions";
 import { useBulkDeleteTransactions } from "@/features/transactions/api/use-bulk-create-transactions";
 import { Skeleton } from "@/components/ui/skeleton";
+import { columns } from "./columns";
+import { Row } from "@tanstack/react-table";
+import { DataTable } from "@/components/data-table";
 
 const TransactionsPage = () => {
   const NewTransaction = useNewTransaction();
@@ -48,16 +51,16 @@ const TransactionsPage = () => {
           </Button>
         </CardHeader>
         <CardContent>
-          {/* <DataTable
+          <DataTable
             columns={columns}
             data={transactions}
-            filterKey="name"
-            onDelete={(row) => {
-              const ids = row.map((r) => r.original.id);
-              DeleteTransactions.mutate({ ids });
+            filterKey="payee"
+            onDelete={(rows) => {
+              const ids = rows.map((r) => r.original.id);
+              // DeleteTransactions.mutate({ ids });
             }}
             disabled={isDeleteDisabled}
-          /> */}
+          />
         </CardContent>
       </Card>
     </div>

@@ -23,6 +23,7 @@ export const DatePicker: React.FC<Props> = ({ value, disabled, onChange }) => {
       <PopoverTrigger>
         <Button
           disabled={disabled}
+          type="button"
           variant={"outline"}
           className={cn(
             "w-full justify-start text-left font-normal",
