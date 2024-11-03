@@ -19,7 +19,7 @@ export const useGetSummary = () => {
           from,
           to,
           accountId,
-          categoryId
+          categoryId,
         },
       });
 

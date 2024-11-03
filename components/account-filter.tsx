@@ -23,8 +23,6 @@ export const AccountFilter = () => {
   const from = params.get("from") || "";
   const to = params.get("to") || "";
 
-  console.log(pathname);
-  
 
   const x = pathname === "/" ? useGetSummary() : useGetTransactions();
 
