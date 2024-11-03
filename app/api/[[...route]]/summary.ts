@@ -5,9 +5,7 @@ import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
 import { zValidator } from "@hono/zod-validator";
 import { differenceInDays, parse, subDays } from "date-fns";
 import { and, desc, eq, gte, lt, lte, sql, sum } from "drizzle-orm";
-import { numeric } from "drizzle-orm/sqlite-core";
 import { Hono } from "hono";
-import { get } from "http";
 import { z } from "zod";
 
 const app = new Hono().get(
@@ -19,11 +17,12 @@ const app = new Hono().get(
       from: z.string().optional(),
       to: z.string().optional(),
       accountId: z.string().optional(),
+      categoryId:z.string().optional()
     })
   ),
   async (c) => {
     const auth = getAuth(c);
-    const { accountId, from, to } = c.req.valid("query");
+    const { accountId, categoryId, from, to } = c.req.valid("query");
 
     if (!auth?.userId) return c.json({ error: "Unauthorized" }, 401);
 
@@ -40,6 +39,7 @@ const app = new Hono().get(
     const lastPeriodStart = subDays(startDate, periodLength);
     const lastPeriodEnd = subDays(endDate, periodLength);
 
+    // take all the income, expense and savings in the specified date range
     async function fetchFinancialData(
       userId: string,
       startDate: Date,
@@ -66,6 +66,7 @@ const app = new Hono().get(
         .where(
           and(
             accountId ? eq(transactions.accountId, accountId) : undefined,
+            categoryId ? eq(transactions.categoryId, categoryId) : undefined,
             eq(accounts.userId, userId),
             gte(transactions.date, startDate),
             lte(transactions.date, endDate)
@@ -99,6 +100,7 @@ const app = new Hono().get(
       lastPeriod.remaining
     );
 
+    // take all the categories with the expenses in the given specified range
     const category = await db
       .select({
         name: categories.name,
@@ -128,6 +130,7 @@ const app = new Hono().get(
       finalCategories.push({ name: "Other", value: otherSum });
     }
 
+    // take all the days in which income or expense is done with the given specified range
     const activeDays = await db
       .select({
         date: transactions.date,
@@ -145,6 +148,7 @@ const app = new Hono().get(
       .where(
         and(
           accountId ? eq(transactions.accountId, accountId) : undefined,
+          categoryId ? eq(transactions.categoryId, categoryId) : undefined,
           eq(accounts.userId, auth.userId),
           gte(transactions.date, startDate),
           lte(transactions.date, endDate)
@@ -153,6 +157,7 @@ const app = new Hono().get(
       .groupBy(transactions.date)
       .orderBy(transactions.date);
 
+    // add the gap of days where there is no income or expense
     const days = fillMissingDays(activeDays, startDate, endDate);
 
     return c.json({

@@ -5,10 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2, Plus } from "lucide-react";
 import { useNewTransaction } from "@/features/transactions/hooks/use-new-transaction";
 import { useGetTransactions } from "@/features/transactions/api/use-get-transactions";
-import { useBulkDeleteTransactions } from "@/features/transactions/api/use-bulk-create-transactions";
+import { useBulkDeleteTransactions } from "@/features/transactions/api/use-bulk-delete";
 import { Skeleton } from "@/components/ui/skeleton";
 import { columns } from "./columns";
-import { Row } from "@tanstack/react-table";
 import { DataTable } from "@/components/data-table";
 
 const TransactionsPage = () => {
@@ -57,7 +56,7 @@ const TransactionsPage = () => {
             filterKey="payee"
             onDelete={(rows) => {
               const ids = rows.map((r) => r.original.id);
-              // DeleteTransactions.mutate({ ids });
+              DeleteTransactions.mutate({ ids });
             }}
             disabled={isDeleteDisabled}
           />

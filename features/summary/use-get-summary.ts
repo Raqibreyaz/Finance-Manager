@@ -9,15 +9,17 @@ export const useGetSummary = () => {
   const from = params.get("from") || "";
   const to = params.get("to") || "";
   const accountId = params.get("accountId") || "";
+  const categoryId = params.get("categoryId") || "";
 
   const query = useQuery({
-    queryKey: ["summary", { from, to, accountId }],
+    queryKey: ["summary", { from, to, accountId, categoryId }],
     queryFn: async () => {
       const response = await client.api.summary.$get({
         query: {
           from,
           to,
           accountId,
+          categoryId
         },
       });
 
@@ -37,7 +39,7 @@ export const useGetSummary = () => {
         days: data.days.map((day) => ({
           ...day,
           income: convertAmountFromMilliunits(day.income),
-          expenses:convertAmountFromMilliunits(day.expenses)
+          expenses: convertAmountFromMilliunits(day.expenses),
         })),
       };
     },

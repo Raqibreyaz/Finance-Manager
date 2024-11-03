@@ -1,6 +1,11 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-const isProtectedRoute = createRouteMatcher(["/"]);
+const isProtectedRoute = createRouteMatcher([
+  "/",
+  "/accounts",
+  "/categories",
+  "/transactions",
+]);
 
 //by default clerk middleware makes all routes public but here we are telling it to  the specified routes
 export default clerkMiddleware((auth, request) => {

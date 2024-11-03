@@ -6,13 +6,15 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
+import { HeaderLogo } from "./HeaderLogo";
+import Image from "next/image";
 
 const routes = [
   { href: "/", label: "overview" },
   { href: "/transactions", label: "transactions" },
   { href: "/accounts", label: "accounts" },
   { href: "/categories", label: "categories" },
-  { href: "/settings", label: "settings" },
+  // { href: "/settings", label: "settings" },
 ];
 
 export const Navigation = () => {
@@ -40,6 +42,12 @@ export const Navigation = () => {
           </Button>
         </SheetTrigger>
         <SheetContent side={"left"} className="px-2">
+          <div className="items-center flex justify-center">
+            <Image src={"/logo.svg"} alt="logo" height={35} width={35} className="invert"/>
+            <p className="capitalize font-semibold text-black text-xl ml-2.5">
+              finance
+            </p>
+          </div>
           <nav className="flex flex-col gap-y-2 pt-6">
             {routes.map(({ href, label }) => (
               <Button

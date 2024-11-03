@@ -25,11 +25,12 @@ const app = new Hono()
         from: z.string().optional(),
         to: z.string().optional(),
         accountId: z.string().optional(),
+        categoryId: z.string().optional(),
       })
     ),
     async (c) => {
       const auth = getAuth(c);
-      const { accountId, from, to } = c.req.valid("query");
+      const { accountId,categoryId, from, to } = c.req.valid("query");
 
       if (!auth?.userId) return c.json({ error: "Unauthorized" }, 401);
 
@@ -67,6 +68,8 @@ const app = new Hono()
           and(
             // if fetching for a particular account
             accountId ? eq(transactions.accountId, accountId) : undefined,
+            // if fetching for a particular category
+            categoryId ? eq(transactions.categoryId, categoryId) : undefined,
             // take transactions only of the user's accounts
             eq(accounts.userId, auth.userId),
             // from this date
@@ -145,7 +148,7 @@ const app = new Hono()
 
       const [data] = await db
         .insert(transactions)
-        .values({ id: createId(), ...values }) 
+        .values({ id: createId(), ...values })
         .returning();
 
       return c.json({ data });
@@ -271,7 +274,7 @@ const app = new Hono()
       if (!auth?.userId) {
         return c.json({ error: "Unauthorized" }, 400);
       }
-      
+
       const transactionToDelete = db.$with("transaction_to_delete").as(
         db
           .select({ id: transactions.id })

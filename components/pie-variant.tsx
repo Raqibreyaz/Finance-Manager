@@ -1,4 +1,4 @@
-  import {
+import {
   Cell,
   Legend,
   Pie,
@@ -19,8 +19,6 @@ interface Props {
 }
 
 export const PieVariant: React.FC<Props> = ({ data }) => {
-  console.log('category data',data);
-  
   return (
     <ResponsiveContainer width={"100%"} height={350}>
       <PieChart>
@@ -30,8 +28,6 @@ export const PieVariant: React.FC<Props> = ({ data }) => {
           align="right"
           iconType="circle"
           content={({ payload }: any) => {
-            console.log('payload',payload);
-            
             return (
               <ul className="flex flex-col space-y-2">
                 {payload.map((entry: any, index: number) => (
@@ -70,9 +66,7 @@ export const PieVariant: React.FC<Props> = ({ data }) => {
           labelLine={false}
         >
           {data.map((_, index) => (
-            <Cell
-             key={`cell-${index}`} 
-             fill={COLORS[index % COLORS.length]}/>
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
       </PieChart>

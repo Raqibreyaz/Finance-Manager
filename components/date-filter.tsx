@@ -15,6 +15,8 @@ import { DateRange } from "react-day-picker";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { Calendar } from "./ui/calendar";
+import { useGetSummary } from "@/features/summary/use-get-summary";
+import { useGetTransactions } from "@/features/transactions/api/use-get-transactions";
 
 export const DateFilter = () => {
   const router = useRouter();
@@ -22,6 +24,7 @@ export const DateFilter = () => {
 
   const params = useSearchParams();
   const accountId = params.get("accountId");
+  const categoryId = params.get("categoryId");
   const from = params.get("from") || "";
   const to = params.get("to") || "";
 
@@ -35,11 +38,13 @@ export const DateFilter = () => {
 
   const [date, setDate] = useState<DateRange | undefined>(paramState);
 
+  // add the selected date range to query params
   const pushToUrl = (dateRange: DateRange | undefined) => {
     const query = {
       from: format(dateRange?.from || defaultFrom, "yyyy-MM-dd"),
       to: format(dateRange?.to || defaultTo, "yyyy-MM-dd"),
       accountId,
+      categoryId,
     };
 
     const url = qs.stringifyUrl(
@@ -50,16 +55,19 @@ export const DateFilter = () => {
     router.push(url);
   };
 
+  // will reset the selected range to default
   const onReset = () => {
     setDate(undefined);
     pushToUrl(undefined);
   };
 
+  const x = pathname === "/" ? useGetSummary() : useGetTransactions();
+
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          disabled={false}
+          disabled={x.isLoading}
           size="sm"
           variant={"outline"}
           className="lg:w-auto w-full h-9 rounded-md px-3 font-normal bg-white/10 hover:bg-white/20 hover:text-white border-none focus:ring-offset-0 focus:ring-transparent outline-none text-white focus:bg-white/30 transition"
@@ -70,7 +78,7 @@ export const DateFilter = () => {
       </PopoverTrigger>
       <PopoverContent className="lg:w-auto w-full p-0" align="start">
         <Calendar
-          disabled={false}
+          disabled={x.isLoading}
           initialFocus
           mode="range"
           defaultMonth={date?.from}
