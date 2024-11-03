@@ -61,8 +61,6 @@ export const TransactionForm: React.FC<Props> = ({
   });
 
   const handleSubmit = (values: FormValues) => {
-    console.log(values);
-
     const amountInMilliunits = convertAmountToMilliunits(
       parseFloat(values.amount)
     );

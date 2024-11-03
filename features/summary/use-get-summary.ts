@@ -24,7 +24,6 @@ export const useGetSummary = () => {
       if (!response.ok) throw new Error("failed to fetch Summary");
 
       const { data } = await response.json();
-      console.log(data);
 
       return {
         ...data,

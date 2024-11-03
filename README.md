@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Finance Manager Progressive Web App
 
-## Getting Started
+Finance Manager is a Progressive Web Application (PWA) that helps you track your income, expenses, and savings efficiently. With powerful categorization, filtering, and reporting features, this app provides you with clear insights into your financial habits, supporting informed decision-making and better financial health.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Core Functionalities
+- **Income, Expense, and Savings Tracking**: Record and manage your finances, categorizing entries to keep track of where your money goes.
+- **Categorization**: Organize transactions into categories for easy sorting and reporting.
+- **Multi-Account Support**: Track transactions across various accounts (e.g., bank, credit card, cash).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Advanced Capabilities
+- **Filtering Options**:
+  - **By Payee**: Filter transactions by payee to understand spending by recipient.
+  - **By Account**: View transactions specific to an account for detailed tracking.
+  - **By Category**: Filter by category for insights into specific spending areas.
+- **Search**:
+  - **Search Categories**: Quickly find specific categories to analyze or update.
+- **Custom Reports**:
+  - **Date-Range Reports**: Generate reports for transactions within a selected date range for budgeting, tax preparation, or personal reviews.
+- **Charts and Visual Insights**: Gain insights through visualizations of spending patterns by category and time frame.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Frontend**: [Next.js](https://nextjs.org/) with TypeScript, [Tailwind CSS](https://tailwindcss.com/), [Shadcn](https://shadcn.dev/) for UI components
+- **Backend**: [Hono](https://hono.dev/) for backend logic with Next.js API routes
+- **Database**: PostgreSQL with [Drizzle ORM](https://orm.drizzle.team/) for seamless type-safe database interactions
+- **Authentication**: [Clerk](https://clerk.dev/) for secure user authentication
+- **Validation**: [Zod](https://github.com/colinhacks/zod) for schema validation
+- **State Management**: [Zustand](https://zustand-demo.pmnd.rs/) for lightweight, flexible state management
+- **Data Fetching**: [React Query](https://tanstack.com/query/v3/) for efficient data fetching and client-side caching
 
-## Learn More
+## Installation
 
-To learn more about Next.js, take a look at the following resources:
+1. **Clone the Repository**:
+   ```bash
+   git clone repo-link
+   cd Finance-Manager
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Install Dependencies**:
+   ```bash
+   pnpm install
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. **Create Environment Variables**:
+    ```bash
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+    CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+    CLERK_SECRET_KEY=your_clerk_secret_key
 
-## Deploy on Vercel
+    NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+    NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    DATABASE_URL=your_postgresql_database_url
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+    NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+4. **Run the Development Server**
+    ```bash
+    pnpm dev    

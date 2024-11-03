@@ -20,7 +20,7 @@ const TransactionsPage = () => {
     TransactionsQuery.isLoading || DeleteTransactions.isPending;
 
   const transactions = TransactionsQuery.data || [];
-  console.log(transactions);
+
   if (TransactionsQuery.isLoading) {
     return (
       <div className="border">

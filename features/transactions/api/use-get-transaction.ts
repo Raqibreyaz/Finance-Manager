@@ -13,8 +13,6 @@ export const useGetTransaction = (id?: string) => {
       if (!response.ok) throw new Error("failed to fetch transaction");
 
       const { data } = await response.json();
-      console.log(data);
-
       return data;
     },
   });

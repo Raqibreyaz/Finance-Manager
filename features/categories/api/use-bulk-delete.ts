@@ -27,6 +27,7 @@ export const useBulkDeleteCategories = () => {
       ids.forEach((id) => {
         queryClient.invalidateQueries({ queryKey: ["category", { id }] });
       });
+      queryClient.invalidateQueries({ queryKey: ["summary"] });
     },
     onError: () => {
       toast.error("Failed to Delete the Selected Categories");
