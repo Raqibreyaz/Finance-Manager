@@ -1,14 +1,15 @@
 "use client";
 
-import { format, subDays } from "date-fns";
+import { format } from "date-fns";
 import qs from "query-string";
+import { defaultFrom, defaultTo } from "@/constants";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import {
   Popover,
   PopoverClose,
   PopoverContent,
   PopoverTrigger,
-} from "./ui/popover";
+} from "@/components/ui/popover";
 import { Button } from "./ui/button";
 import { formatDateRange } from "@/lib/utils";
 import { DateRange } from "react-day-picker";
@@ -27,9 +28,6 @@ export const DateFilter = () => {
   const categoryId = params.get("categoryId");
   const from = params.get("from") || "";
   const to = params.get("to") || "";
-
-  const defaultTo = new Date();
-  const defaultFrom = new Date("2025-01-01"); //take it from new year
 
   const paramState = {
     from: from ? new Date(from) : defaultFrom,

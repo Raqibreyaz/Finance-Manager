@@ -1,4 +1,5 @@
 import { db } from "@/db/drizzle";
+import { defaultFrom, defaultTo } from "@/constants";
 import { accounts, categories, transactions } from "@/db/schema";
 import { calculatePercentageChange, fillMissingDays } from "@/lib/utils";
 import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
@@ -17,7 +18,7 @@ const app = new Hono().get(
       from: z.string().optional(),
       to: z.string().optional(),
       accountId: z.string().optional(),
-      categoryId:z.string().optional()
+      categoryId: z.string().optional(),
     })
   ),
   async (c) => {
@@ -25,9 +26,6 @@ const app = new Hono().get(
     const { accountId, categoryId, from, to } = c.req.valid("query");
 
     if (!auth?.userId) return c.json({ error: "Unauthorized" }, 401);
-
-    const defaultTo = new Date();
-    const defaultFrom = subDays(defaultTo, 30);
 
     const startDate = from
       ? parse(from, "yyyy-MM-dd", new Date())

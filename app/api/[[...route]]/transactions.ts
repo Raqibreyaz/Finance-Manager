@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { db } from "@/db/drizzle";
+import { defaultFrom, defaultTo } from "@/constants";
 import {
   accounts,
   categories,
@@ -30,14 +31,9 @@ const app = new Hono()
     ),
     async (c) => {
       const auth = getAuth(c);
-      const { accountId,categoryId, from, to } = c.req.valid("query");
+      const { accountId, categoryId, from, to } = c.req.valid("query");
 
       if (!auth?.userId) return c.json({ error: "Unauthorized" }, 401);
-
-      // current date
-      const defaultTo = new Date();
-      // 30 days back date
-      const defaultFrom = subDays(defaultTo, 30);
 
       const startDate = from
         ? parse(from, "yyyy-MM-dd", new Date())

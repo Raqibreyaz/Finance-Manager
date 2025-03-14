@@ -20,6 +20,15 @@ Finance Manager is a Progressive Web Application (PWA) that helps you track your
   - **Date-Range Reports**: Generate reports for transactions within a selected date range for budgeting, tax preparation, or personal reviews.
 - **Charts and Visual Insights**: Gain insights through visualizations of spending patterns by category and time frame.
 
+### Summary
+![](./assets/Summary.png)
+
+### Transactions
+![](./assets/Transaction.png)
+
+### Date Filter
+![](./assets/date-filter.png)
+
 ## Tech Stack
 
 - **Frontend**: [Next.js](https://nextjs.org/) with TypeScript, [Tailwind CSS](https://tailwindcss.com/), [Shadcn](https://shadcn.dev/) for UI components
