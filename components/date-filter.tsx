@@ -29,7 +29,7 @@ export const DateFilter = () => {
   const to = params.get("to") || "";
 
   const defaultTo = new Date();
-  const defaultFrom = subDays(defaultTo, 30);
+  const defaultFrom = new Date("2025-01-01"); //take it from new year
 
   const paramState = {
     from: from ? new Date(from) : defaultFrom,
